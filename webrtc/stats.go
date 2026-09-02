@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kulikov0/headless-client/internal/ice"
+	"github.com/megamen32/headless-client/internal/ice"
 )
 
 // A Stats object contains a set of statistics copies out of a monitored component

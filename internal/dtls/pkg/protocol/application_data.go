@@ -6,7 +6,7 @@ package protocol
 import (
 	"bytes"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
 )
 
 // ApplicationData messages are carried by the record layer and are

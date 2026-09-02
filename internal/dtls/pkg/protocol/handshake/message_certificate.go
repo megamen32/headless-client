@@ -6,8 +6,8 @@ package handshake
 import (
 	"bytes"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	"github.com/kulikov0/headless-client/internal/dtls/internal/util"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	"github.com/megamen32/headless-client/internal/dtls/internal/util"
 )
 
 // MessageCertificate is a DTLS Handshake Message

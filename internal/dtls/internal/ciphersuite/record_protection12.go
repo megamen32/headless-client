@@ -13,10 +13,10 @@ import (
 	"encoding/binary"
 	"sync"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ccm"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/prf"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ccm"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/prf"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 

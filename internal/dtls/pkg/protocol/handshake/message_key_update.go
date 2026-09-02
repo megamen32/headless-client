@@ -3,7 +3,7 @@
 
 package handshake
 
-import dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
+import dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
 
 // KeyUpdateRequest indicates whether the recipient should update its sending
 // traffic keys as well.

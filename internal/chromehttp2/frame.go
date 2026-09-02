@@ -15,7 +15,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/kulikov0/headless-client/internal/chromehttp2/internal/httpsfv"
+	"github.com/megamen32/headless-client/internal/chromehttp2/internal/httpsfv"
 	"golang.org/x/net/http/httpguts"
 	"golang.org/x/net/http2/hpack"
 )

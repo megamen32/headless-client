@@ -6,7 +6,7 @@ package handshake
 import (
 	"encoding/binary"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
 )
 
 const newConnectionIDMaxListLength = 65535

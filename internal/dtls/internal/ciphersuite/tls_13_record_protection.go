@@ -10,10 +10,10 @@ import (
 	"encoding/binary"
 	"hash"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/keyschedule"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/keyschedule"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
 	"golang.org/x/crypto/chacha20"
 	"golang.org/x/crypto/chacha20poly1305"
 )

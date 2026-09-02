@@ -9,7 +9,7 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/kulikov0/headless-client/stand/internal/wire"
+	"github.com/megamen32/headless-client/stand/internal/wire"
 )
 
 type group struct {

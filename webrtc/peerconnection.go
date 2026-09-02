@@ -18,9 +18,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kulikov0/headless-client/internal/ice"
-	"github.com/kulikov0/headless-client/webrtc/internal/util"
-	"github.com/kulikov0/headless-client/webrtc/pkg/rtcerr"
+	"github.com/megamen32/headless-client/internal/ice"
+	"github.com/megamen32/headless-client/webrtc/internal/util"
+	"github.com/megamen32/headless-client/webrtc/pkg/rtcerr"
 	"github.com/pion/interceptor"
 	"github.com/pion/interceptor/pkg/stats"
 	"github.com/pion/logging"

@@ -11,9 +11,9 @@ import (
 	"net"
 	"os"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
 )
 
 // ErrConnClosed indicates that the connection is closed.

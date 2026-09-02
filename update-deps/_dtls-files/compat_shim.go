@@ -3,7 +3,7 @@ package dtls
 import (
 	"net"
 
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
 )
 
 type (

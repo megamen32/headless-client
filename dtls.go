@@ -6,10 +6,10 @@ import (
 	"slices"
 	"time"
 
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
-	"github.com/kulikov0/headless-client/webrtc"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
+	"github.com/megamen32/headless-client/webrtc"
 )
 
 var greaseValues = [...]uint16{

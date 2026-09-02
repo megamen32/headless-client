@@ -17,8 +17,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/fingerprint"
-	"github.com/kulikov0/headless-client/webrtc/pkg/rtcerr"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/fingerprint"
+	"github.com/megamen32/headless-client/webrtc/pkg/rtcerr"
 )
 
 // Certificate represents a x509Cert used to authenticate WebRTC communications.

@@ -12,14 +12,14 @@ import (
 	"maps"
 	"slices"
 
-	dtlsconfig "github.com/kulikov0/headless-client/internal/dtls/internal/config"
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	dtlsflight "github.com/kulikov0/headless-client/internal/dtls/internal/flight"
-	dtlsflight13 "github.com/kulikov0/headless-client/internal/dtls/internal/flight/flight13"
-	dtlsstate "github.com/kulikov0/headless-client/internal/dtls/internal/state"
-	"github.com/kulikov0/headless-client/internal/dtls/internal/util"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlsconfig "github.com/megamen32/headless-client/internal/dtls/internal/config"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	dtlsflight "github.com/megamen32/headless-client/internal/dtls/internal/flight"
+	dtlsflight13 "github.com/megamen32/headless-client/internal/dtls/internal/flight/flight13"
+	dtlsstate "github.com/megamen32/headless-client/internal/dtls/internal/state"
+	"github.com/megamen32/headless-client/internal/dtls/internal/util"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 // tlsHandshakeHeaderLength is the TLS 1.3 transcript handshake header length.

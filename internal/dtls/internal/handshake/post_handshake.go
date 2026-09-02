@@ -13,13 +13,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	dtlsciphersuite "github.com/kulikov0/headless-client/internal/dtls/internal/ciphersuite"
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	dtlsflight "github.com/kulikov0/headless-client/internal/dtls/internal/flight"
-	dtlsstate "github.com/kulikov0/headless-client/internal/dtls/internal/state"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlsciphersuite "github.com/megamen32/headless-client/internal/dtls/internal/ciphersuite"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	dtlsflight "github.com/megamen32/headless-client/internal/dtls/internal/flight"
+	dtlsstate "github.com/megamen32/headless-client/internal/dtls/internal/state"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 const (

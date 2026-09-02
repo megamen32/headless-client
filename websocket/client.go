@@ -15,7 +15,7 @@ import (
 	"net"
 	"net/http"
 
-	chromehttp1 "github.com/kulikov0/headless-client/internal/chromehttp1"
+	chromehttp1 "github.com/megamen32/headless-client/internal/chromehttp1"
 	"net/http/httptrace"
 	"net/url"
 	"strings"

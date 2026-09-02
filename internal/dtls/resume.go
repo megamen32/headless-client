@@ -7,8 +7,8 @@ import (
 	"errors"
 	"net"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
 )
 
 func resumeWithConfig(state *State, conn net.PacketConn, rAddr net.Addr, config *dtlsConfig) (*Conn, error) {

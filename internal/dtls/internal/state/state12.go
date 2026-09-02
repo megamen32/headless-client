@@ -4,12 +4,12 @@
 package state
 
 import (
-	dtlsciphersuite "github.com/kulikov0/headless-client/internal/dtls/internal/ciphersuite"
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/elliptic"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/signaturehash"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlsciphersuite "github.com/megamen32/headless-client/internal/dtls/internal/ciphersuite"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/elliptic"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/signaturehash"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 // State12 holds state that is meaningful only for DTLS 1.2.

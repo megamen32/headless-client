@@ -11,11 +11,11 @@ import (
 	"slices"
 	"time"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/elliptic"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/elliptic"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 	"github.com/pion/logging"
 )
 

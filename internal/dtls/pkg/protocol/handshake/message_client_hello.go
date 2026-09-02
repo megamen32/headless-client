@@ -7,9 +7,9 @@ import (
 	"bytes"
 	"encoding/binary"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension"
 )
 
 /*

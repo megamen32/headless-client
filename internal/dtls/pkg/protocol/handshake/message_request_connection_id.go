@@ -3,7 +3,7 @@
 
 package handshake
 
-import dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
+import dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
 
 // MessageRequestConnectionID requests spare CIDs from a peer.
 //

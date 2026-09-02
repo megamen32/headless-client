@@ -7,7 +7,7 @@ import (
 	"bytes"
 	"sync"
 
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
 )
 
 // TrafficGeneration binds an epoch and traffic-secret generation to the

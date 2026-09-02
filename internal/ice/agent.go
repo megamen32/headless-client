@@ -17,8 +17,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	stunx "github.com/kulikov0/headless-client/internal/ice/internal/stun"
-	"github.com/kulikov0/headless-client/internal/ice/internal/taskloop"
+	stunx "github.com/megamen32/headless-client/internal/ice/internal/stun"
+	"github.com/megamen32/headless-client/internal/ice/internal/taskloop"
 	"github.com/pion/logging"
 	"github.com/pion/mdns/v2"
 	"github.com/pion/stun/v3"

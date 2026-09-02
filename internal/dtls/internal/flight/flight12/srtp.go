@@ -7,10 +7,10 @@ import (
 	"bytes"
 	"fmt"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	"github.com/kulikov0/headless-client/internal/dtls/internal/negotiation"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	"github.com/megamen32/headless-client/internal/dtls/internal/negotiation"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension"
 )
 
 func validateServerSRTP(snapshot negotiation.ClientHelloSnapshot, responses []extension.Value, localProfiles []extension.SRTPProtectionProfile, want negotiation.SRTPDecision) error {

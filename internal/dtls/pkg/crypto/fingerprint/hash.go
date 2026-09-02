@@ -7,7 +7,7 @@ import (
 	"crypto"
 	"strings"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
 )
 
 func nameToHash() map[string]crypto.Hash {

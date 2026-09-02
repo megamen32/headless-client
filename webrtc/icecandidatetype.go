@@ -6,7 +6,7 @@ package webrtc
 import (
 	"fmt"
 
-	"github.com/kulikov0/headless-client/internal/ice"
+	"github.com/megamen32/headless-client/internal/ice"
 )
 
 // ICECandidateType represents the type of the ICE candidate used.

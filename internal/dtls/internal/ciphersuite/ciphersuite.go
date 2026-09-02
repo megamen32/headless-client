@@ -10,11 +10,11 @@ import (
 	"crypto/sha512"
 	"hash"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/clientcertificate"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/prf"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/clientcertificate"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/prf"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
 )
 
 func ForID(id cryptosuite.ID) cryptosuite.Suite { return builtinCipherSuites[id] }

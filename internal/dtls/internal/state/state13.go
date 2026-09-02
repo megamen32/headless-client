@@ -6,11 +6,11 @@ package state
 import (
 	"bytes"
 
-	"github.com/kulikov0/headless-client/internal/dtls/internal/negotiation"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/elliptic"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/signaturehash"
-	extension13 "github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	"github.com/megamen32/headless-client/internal/dtls/internal/negotiation"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/elliptic"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/signaturehash"
+	extension13 "github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 type TrafficSecrets struct {

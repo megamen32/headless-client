@@ -3,7 +3,7 @@ package headless
 import (
 	"crypto/rand"
 
-	"github.com/kulikov0/headless-client/webrtc"
+	"github.com/megamen32/headless-client/webrtc"
 )
 
 const (

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kulikov0/headless-client/internal/ice"
+	"github.com/megamen32/headless-client/internal/ice"
 )
 
 // ICECandidate represents a ice candidate.

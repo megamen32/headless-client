@@ -6,9 +6,9 @@ package dtlshandshake
 import (
 	"context"
 
-	dtlsflight "github.com/kulikov0/headless-client/internal/dtls/internal/flight"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
+	dtlsflight "github.com/megamen32/headless-client/internal/dtls/internal/flight"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
 )
 
 // RecvHandshakeState signals that a handshake packet has been received.

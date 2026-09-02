@@ -8,13 +8,13 @@ import (
 	"crypto/rand"
 	"slices"
 
-	dtlsconfig "github.com/kulikov0/headless-client/internal/dtls/internal/config"
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	dtlsflight "github.com/kulikov0/headless-client/internal/dtls/internal/flight"
-	"github.com/kulikov0/headless-client/internal/dtls/internal/negotiation"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlsconfig "github.com/megamen32/headless-client/internal/dtls/internal/config"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	dtlsflight "github.com/megamen32/headless-client/internal/dtls/internal/flight"
+	"github.com/megamen32/headless-client/internal/dtls/internal/negotiation"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 //nolint:cyclop,gocognit,gocyclo

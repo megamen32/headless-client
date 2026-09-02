@@ -8,12 +8,12 @@ import (
 	"crypto/tls"
 	"encoding/binary"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/elliptic"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/hash"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/signature"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/signaturehash"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/elliptic"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/hash"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/signature"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/signaturehash"
 )
 
 // MessageServerKeyExchange supports ECDH and PSK.

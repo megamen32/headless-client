@@ -8,15 +8,15 @@ import (
 	"errors"
 	"slices"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	dtlsflight "github.com/kulikov0/headless-client/internal/dtls/internal/flight"
-	"github.com/kulikov0/headless-client/internal/dtls/internal/negotiation"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/elliptic"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/prf"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
-	extension13 "github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	dtlsflight "github.com/megamen32/headless-client/internal/dtls/internal/flight"
+	"github.com/megamen32/headless-client/internal/dtls/internal/negotiation"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/elliptic"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/prf"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
+	extension13 "github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 func flight3Parse(ctx context.Context, conn dtlsflight.Conn, flightCtx *handshakeContext) (Flight, *alert.Alert, error) {

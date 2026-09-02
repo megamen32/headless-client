@@ -10,7 +10,7 @@ import (
 	"errors"
 	"time"
 
-	atomicx "github.com/kulikov0/headless-client/internal/ice/internal/atomic"
+	atomicx "github.com/megamen32/headless-client/internal/ice/internal/atomic"
 )
 
 // ErrClosed indicates that the loop has been stopped.

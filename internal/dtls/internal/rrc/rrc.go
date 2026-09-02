@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
 )
 
 const pathValidationTimeout = time.Second

@@ -8,7 +8,7 @@ package webrtc
 import (
 	"encoding/json"
 
-	"github.com/kulikov0/headless-client/webrtc/pkg/rtcerr"
+	"github.com/megamen32/headless-client/webrtc/pkg/rtcerr"
 	"github.com/pion/stun/v3"
 )
 

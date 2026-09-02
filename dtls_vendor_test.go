@@ -8,12 +8,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kulikov0/headless-client/internal/dtls"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/selfsign"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	"github.com/megamen32/headless-client/internal/dtls"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/selfsign"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 const vendorHandshakeTimeout = 10 * time.Second

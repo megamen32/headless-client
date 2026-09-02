@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kulikov0/headless-client/webrtc"
+	"github.com/megamen32/headless-client/webrtc"
 )
 
 var sdpICELine = regexp.MustCompile(`(?m)^a=ice-(ufrag|pwd):([^\r\n]*)`)

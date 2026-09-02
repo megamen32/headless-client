@@ -9,12 +9,12 @@ import (
 	"fmt"
 	"sync"
 
-	dtlsconfig "github.com/kulikov0/headless-client/internal/dtls/internal/config"
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/prf"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlsconfig "github.com/megamen32/headless-client/internal/dtls/internal/config"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/prf"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 type Cache struct {

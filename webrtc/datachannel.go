@@ -13,7 +13,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kulikov0/headless-client/webrtc/pkg/rtcerr"
+	"github.com/megamen32/headless-client/webrtc/pkg/rtcerr"
 	"github.com/pion/datachannel"
 	"github.com/pion/logging"
 )

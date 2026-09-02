@@ -14,14 +14,14 @@ import (
 	"sync"
 	"time"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	internalstate "github.com/kulikov0/headless-client/internal/dtls/internal/state"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/elliptic"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/signaturehash"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	internalstate "github.com/megamen32/headless-client/internal/dtls/internal/state"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/elliptic"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/signaturehash"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 	"github.com/pion/logging"
 )
 

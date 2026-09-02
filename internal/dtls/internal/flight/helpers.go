@@ -9,12 +9,12 @@ import (
 	"encoding/binary"
 	"slices"
 
-	dtlsconfig "github.com/kulikov0/headless-client/internal/dtls/internal/config"
-	"github.com/kulikov0/headless-client/internal/dtls/internal/negotiation"
-	dtlsstate "github.com/kulikov0/headless-client/internal/dtls/internal/state"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/signaturehash"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlsconfig "github.com/megamen32/headless-client/internal/dtls/internal/config"
+	"github.com/megamen32/headless-client/internal/dtls/internal/negotiation"
+	dtlsstate "github.com/megamen32/headless-client/internal/dtls/internal/state"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/signaturehash"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 func FindMatchingSRTPProfile(a, b []dtlsconfig.SRTPProtectionProfile) (dtlsconfig.SRTPProtectionProfile, bool) {

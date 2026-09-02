@@ -7,9 +7,9 @@ import (
 	"crypto/tls"
 	"encoding/binary"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/clientcertificate"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/signaturehash"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/clientcertificate"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/signaturehash"
 )
 
 /*

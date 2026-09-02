@@ -9,14 +9,14 @@ import (
 	"errors"
 	"net"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	dtlsflight "github.com/kulikov0/headless-client/internal/dtls/internal/flight"
-	dtlsstate "github.com/kulikov0/headless-client/internal/dtls/internal/state"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/recordlayer"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	dtlsflight "github.com/megamen32/headless-client/internal/dtls/internal/flight"
+	dtlsstate "github.com/megamen32/headless-client/internal/dtls/internal/state"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/recordlayer"
 )
 
 // RandomCIDGenerator is a random Connection ID generator where CID is the

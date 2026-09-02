@@ -19,7 +19,7 @@ import (
 	"sync"
 	"time"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
 	"github.com/pion/transport/v4/deadline"
 )
 

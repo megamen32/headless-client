@@ -10,8 +10,8 @@ import (
 	"hash"
 	"math"
 
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/clientcertificate"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/clientcertificate"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
 )
 
 var (

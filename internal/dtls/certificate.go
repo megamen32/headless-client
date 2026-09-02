@@ -6,11 +6,11 @@ package dtls
 import (
 	"crypto/tls"
 
-	dtlsconfig "github.com/kulikov0/headless-client/internal/dtls/internal/config"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/signaturehash"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlsconfig "github.com/megamen32/headless-client/internal/dtls/internal/config"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/signaturehash"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 // ClientHelloInfo contains information from a ClientHello message in order to

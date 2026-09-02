@@ -14,8 +14,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kulikov0/headless-client/internal/rtpext"
-	"github.com/kulikov0/headless-client/webrtc/internal/fmtp"
+	"github.com/megamen32/headless-client/internal/rtpext"
+	"github.com/megamen32/headless-client/webrtc/internal/fmtp"
 	"github.com/pion/rtp"
 	"github.com/pion/rtp/codecs"
 	"github.com/pion/sdp/v3"

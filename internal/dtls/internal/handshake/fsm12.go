@@ -7,13 +7,13 @@ import (
 	"context"
 	"time"
 
-	dtlsconfig "github.com/kulikov0/headless-client/internal/dtls/internal/config"
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	dtlsflight "github.com/kulikov0/headless-client/internal/dtls/internal/flight"
-	dtlsflight12 "github.com/kulikov0/headless-client/internal/dtls/internal/flight/flight12"
-	dtlsstate "github.com/kulikov0/headless-client/internal/dtls/internal/state"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlsconfig "github.com/megamen32/headless-client/internal/dtls/internal/config"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	dtlsflight "github.com/megamen32/headless-client/internal/dtls/internal/flight"
+	dtlsflight12 "github.com/megamen32/headless-client/internal/dtls/internal/flight/flight12"
+	dtlsstate "github.com/megamen32/headless-client/internal/dtls/internal/state"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 // [RFC6347 Section-4.2.4]

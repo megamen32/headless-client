@@ -6,7 +6,7 @@ package ice
 import (
 	"errors"
 
-	"github.com/kulikov0/headless-client/internal/ice/internal/taskloop"
+	"github.com/megamen32/headless-client/internal/ice/internal/taskloop"
 )
 
 var (

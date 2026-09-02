@@ -3,8 +3,8 @@ package headless
 import (
 	"fmt"
 
-	"github.com/kulikov0/headless-client/internal/rtpext"
-	"github.com/kulikov0/headless-client/webrtc"
+	"github.com/megamen32/headless-client/internal/rtpext"
+	"github.com/megamen32/headless-client/webrtc"
 )
 
 func (p Profile) RegisterHeaderExtensions(mediaEngine *webrtc.MediaEngine) error {

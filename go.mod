@@ -1,4 +1,4 @@
-module github.com/kulikov0/headless-client
+module github.com/megamen32/headless-client
 
 go 1.26.1
 

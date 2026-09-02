@@ -14,8 +14,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kulikov0/headless-client/internal/ice/internal/fakenet"
-	stunx "github.com/kulikov0/headless-client/internal/ice/internal/stun"
+	"github.com/megamen32/headless-client/internal/ice/internal/fakenet"
+	stunx "github.com/megamen32/headless-client/internal/ice/internal/stun"
 	"github.com/pion/dtls/v3"
 	"github.com/pion/logging"
 	"github.com/pion/stun/v3"

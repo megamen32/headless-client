@@ -9,17 +9,17 @@ import (
 	"crypto"
 	"crypto/x509"
 
-	dtlsconfig "github.com/kulikov0/headless-client/internal/dtls/internal/config"
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	dtlsflight "github.com/kulikov0/headless-client/internal/dtls/internal/flight"
-	dtlscrypto "github.com/kulikov0/headless-client/internal/dtls/internal/handshakecrypto"
-	dtlsstate "github.com/kulikov0/headless-client/internal/dtls/internal/state"
-	cryptosuite "github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/ciphersuite"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/prf"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/signaturehash"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/handshake"
+	dtlsconfig "github.com/megamen32/headless-client/internal/dtls/internal/config"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	dtlsflight "github.com/megamen32/headless-client/internal/dtls/internal/flight"
+	dtlscrypto "github.com/megamen32/headless-client/internal/dtls/internal/handshakecrypto"
+	dtlsstate "github.com/megamen32/headless-client/internal/dtls/internal/state"
+	cryptosuite "github.com/megamen32/headless-client/internal/dtls/pkg/crypto/ciphersuite"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/prf"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/signaturehash"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/handshake"
 )
 
 func flight5Parse(_ context.Context, conn dtlsflight.Conn, state *dtlsstate.State12, cache *dtlsflight.Cache, cfg *dtlsconfig.HandshakeConfig) (Flight, *alert.Alert, error) {

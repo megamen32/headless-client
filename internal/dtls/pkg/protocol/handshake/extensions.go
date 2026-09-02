@@ -8,13 +8,13 @@ import (
 	"fmt"
 	"slices"
 
-	dtlserrors "github.com/kulikov0/headless-client/internal/dtls/internal/errors"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/crypto/elliptic"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/alert"
-	"github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension"
-	extension12 "github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension/dtls12"
-	extension13 "github.com/kulikov0/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
+	dtlserrors "github.com/megamen32/headless-client/internal/dtls/internal/errors"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/crypto/elliptic"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/alert"
+	"github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension"
+	extension12 "github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension/dtls12"
+	extension13 "github.com/megamen32/headless-client/internal/dtls/pkg/protocol/extension/dtls13"
 )
 
 // extensionContext identifies the handshake-message context in which an

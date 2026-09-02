@@ -12,9 +12,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kulikov0/headless-client/internal/ice"
-	"github.com/kulikov0/headless-client/webrtc/internal/mux"
-	"github.com/kulikov0/headless-client/webrtc/internal/util"
+	"github.com/megamen32/headless-client/internal/ice"
+	"github.com/megamen32/headless-client/webrtc/internal/mux"
+	"github.com/megamen32/headless-client/webrtc/internal/util"
 	"github.com/pion/logging"
 )
 

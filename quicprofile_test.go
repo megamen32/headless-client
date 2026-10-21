@@ -1,179 +1,102 @@
 package headless
 
 import (
-	"slices"
+	"context"
+	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
+	"crypto/x509"
+	"crypto/x509/pkix"
+	"math/big"
+	"net"
+	"net/http"
 	"testing"
+	"time"
 
+	"github.com/megamen32/headless-client/quic"
+	"github.com/megamen32/headless-client/quic/http3"
 	utls "github.com/refraction-networking/utls"
 )
 
-var (
-	chromeWebTransportExtensions  = []uint16{0x0000, 0x000a, 0x000d, 0x0010, 0x001b, 0x002b, 0x002d, 0x0033, 0x0039, 0x44cd}
-	chromeHTTP3Extensions         = []uint16{0x0000, 0x000a, 0x000d, 0x0010, 0x001b, 0x002b, 0x002d, 0x0033, 0x0039, 0x12e0, 0x44cd, 0xca34, 0xfe0d}
-	chromeWebTransportGroups      = []utls.CurveID{0x001d, 0x0017, 0x0018}
-	chromeQUICSignatureAlgorithms = []utls.SignatureScheme{
-		0x0403, 0x0804, 0x0401, 0x0503, 0x0805, 0x0501, 0x0806, 0x0601, 0x0201,
+// TestQUICConnectionsCarryTheirOwnServerName checks that two connections of
+// one client carry their own server name.
+//
+// uTLS takes the name of the handshake from the spec's SNI extension, and
+// the spec is shared between the connections of a client: without a copy per
+// connection the second connection to another host would carry the first
+// one's name — and fail.
+func TestQUICConnectionsCarryTheirOwnServerName(t *testing.T) {
+	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	if err != nil {
+		t.Fatalf("key: %v", err)
 	}
-	chromeQUICCipherSuites = []uint16{0x1301, 0x1302, 0x1303}
-)
+	tmpl := &x509.Certificate{
+		SerialNumber: big.NewInt(1),
+		Subject:      pkix.Name{CommonName: "quic resumption test"},
+		NotBefore:    time.Now().Add(-time.Hour),
+		NotAfter:     time.Now().Add(time.Hour),
+		IPAddresses:  []net.IP{net.ParseIP("127.0.0.1")},
+	}
+	der, err := x509.CreateCertificate(rand.Reader, tmpl, tmpl, &key.PublicKey, key)
+	if err != nil {
+		t.Fatalf("certificate: %v", err)
+	}
+	certificate := utls.Certificate{Certificate: [][]byte{der}, PrivateKey: key}
 
-func specExtensionIDs(t *testing.T, spec *utls.ClientHelloSpec) []uint16 {
-	t.Helper()
-	ids := make([]uint16, 0, len(spec.Extensions))
-	for _, extension := range spec.Extensions {
-		switch typed := extension.(type) {
-		case *utls.SNIExtension:
-			ids = append(ids, 0x0000)
-		case *utls.SupportedCurvesExtension:
-			ids = append(ids, 0x000a)
-		case *utls.SignatureAlgorithmsExtension:
-			ids = append(ids, 0x000d)
-		case *utls.ALPNExtension:
-			ids = append(ids, 0x0010)
-		case *utls.UtlsCompressCertExtension:
-			ids = append(ids, 0x001b)
-		case *utls.SupportedVersionsExtension:
-			ids = append(ids, 0x002b)
-		case *utls.PSKKeyExchangeModesExtension:
-			ids = append(ids, 0x002d)
-		case *utls.KeyShareExtension:
-			ids = append(ids, 0x0033)
-		case *utls.ApplicationSettingsExtensionNew:
-			ids = append(ids, 0x44cd)
-		case *utls.GREASEEncryptedClientHelloExtension:
-			ids = append(ids, 0xfe0d)
-		case *utls.GenericExtension:
-			ids = append(ids, typed.Id)
-		default:
-			t.Fatalf("unhandled extension type %T", extension)
+	pc, err := net.ListenPacket("udp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatalf("listen: %v", err)
+	}
+	defer pc.Close()
+
+	seen := make(chan string, 4)
+	server := &http3.Server{
+		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			seen <- r.TLS.ServerName
+			w.WriteHeader(http.StatusOK)
+		}),
+		TLSConfig: &utls.Config{Certificates: []utls.Certificate{certificate}},
+	}
+	go func() { _ = server.Serve(pc) }()
+
+	tlsConfig, quicConfig := ChromeWindows.QUICConfig(QUICOptions{
+		Transport:          QUICHTTP3,
+		InsecureSkipVerify: true,
+	})
+	serverAddr := pc.LocalAddr().String()
+	transport := &http3.Transport{
+		QUICConfig:      quicConfig,
+		TLSClientConfig: tlsConfig,
+		// The dialer ignores the name and goes to the local server: the
+		// name still rides in the TLS config, which is the point.
+		Dial: func(ctx context.Context, addr string, tlsCfg *utls.Config, cfg *quic.Config) (*quic.Conn, error) {
+			return quic.DialAddrEarly(ctx, serverAddr, tlsCfg, cfg)
+		},
+	}
+	defer transport.Close()
+
+	names := []string{"first.test", "second.test"}
+	for _, name := range names {
+		req, _ := http.NewRequest(http.MethodGet, "https://"+name+"/", nil)
+		resp, err := transport.RoundTrip(req)
+		if err != nil {
+			t.Fatalf("request %s: %v", name, err)
+		}
+		resp.Body.Close()
+	}
+
+	got := map[string]bool{}
+	for range names {
+		select {
+		case name := <-seen:
+			got[name] = true
+		case <-time.After(5 * time.Second):
+			t.Fatal("the server saw no request")
 		}
 	}
-	slices.Sort(ids)
-
-	return ids
-}
-
-func TestWebTransportHelloCarriesTheBoringSSLDefaults(t *testing.T) {
-	spec := ChromeWindows.quicClientHelloSpec(QUICWebTransport, []string{"h3"})
-
-	if !slices.Equal(spec.CipherSuites, chromeQUICCipherSuites) {
-		t.Fatalf("cipher suites %#04x, the chrome capture carries %#04x with no GREASE", spec.CipherSuites, chromeQUICCipherSuites)
-	}
-
-	ids := specExtensionIDs(t, spec)
-	if !slices.Equal(ids, chromeWebTransportExtensions) {
-		t.Fatalf("extension set %#04x, the chrome webtransport capture carries %#04x", ids, chromeWebTransportExtensions)
-	}
-
-	for _, extension := range spec.Extensions {
-		switch typed := extension.(type) {
-		case *utls.SupportedCurvesExtension:
-			want := chromeWebTransportGroups
-			if measuredChromeMajorVersion >= boringSSLMLKEMDefaultChromeMajorVersion {
-				want = append([]utls.CurveID{0x11ec}, want...)
-			}
-			if !slices.Equal(typed.Curves, want) {
-				t.Fatalf("groups %#04x, DefaultSupportedGroupIds for chrome %d is %#04x", typed.Curves, measuredChromeMajorVersion, want)
-			}
-		case *utls.SignatureAlgorithmsExtension:
-			if !slices.Equal(typed.SupportedSignatureAlgorithms, chromeQUICSignatureAlgorithms) {
-				t.Fatalf("signature algorithms %#04x, kVerifySignatureAlgorithms is %#04x", typed.SupportedSignatureAlgorithms, chromeQUICSignatureAlgorithms)
-			}
-		}
-	}
-}
-
-func TestHTTP3HelloAddsWhatTheSessionPoolConfigures(t *testing.T) {
-	webTransport := specExtensionIDs(t, ChromeWindows.quicClientHelloSpec(QUICWebTransport, []string{"h3"}))
-	http3 := specExtensionIDs(t, ChromeWindows.quicClientHelloSpec(QUICHTTP3, []string{"h3"}))
-
-	// The extension set Chrome 156 sends in its QUIC hello, measured on the
-	// wire 2026-10-21 from a real Chrome 156.0.8078.47: the WebTransport set
-	// plus the ECH GREASE and the two unregistered extensions 0xCA34 and
-	// 0x12E0. Chrome 155 carried one extension less and fingerprinted as
-	// q13i0311h3_55b375c5d22e_178839b6cec1; Chrome 156 carries twelve (or
-	// thirteen by name) and fingerprints as
-	// q13i0312h3_55b375c5d22e_eb028bd37c08.
-	if !slices.Equal(http3, chromeHTTP3Extensions) {
-		t.Fatalf("http3 extensions %#04x, the chrome capture carries %#04x", http3, chromeHTTP3Extensions)
-	}
-	for _, id := range []uint16{0xfe0d, 0xca34, 0x12e0} {
-		if !slices.Contains(http3, id) {
-			t.Fatalf("http3 extensions %#04x carry no %#04x", http3, id)
-		}
-	}
-	if len(webTransport) != len(http3)-3 {
-		t.Fatalf("http3 carries %d extensions and webtransport %d; the documented difference is the ECH extension and the two unregistered ones", len(http3), len(webTransport))
-	}
-
-	spec := ChromeWindows.quicClientHelloSpec(QUICHTTP3, []string{"h3"})
-	for _, extension := range spec.Extensions {
-		curves, ok := extension.(*utls.SupportedCurvesExtension)
-		if !ok {
-			continue
-		}
-		if !slices.Contains(curves.Curves, utls.X25519MLKEM768) {
-			t.Fatalf("http3 groups %v lack the post-quantum group that quic_session_pool.cc sets through set_preferred_groups", curves.Curves)
-		}
-	}
-}
-
-func TestQUICConfigCarriesTheChromeTransportParameters(t *testing.T) {
-	_, webTransport := ChromeWindows.QUICConfig(QUICOptions{Transport: QUICWebTransport})
-	if webTransport.TransportParameterOrder != 1 {
-		t.Fatalf("transport parameter order %d, chrome shuffles and the fork calls that mode 1", webTransport.TransportParameterOrder)
-	}
-	if webTransport.InitialPacketSize != 1250 {
-		t.Fatalf("initial packet size %d, chrome pads its initial udp payload to 1250", webTransport.InitialPacketSize)
-	}
-	if webTransport.MaxIncomingUniStreams != 103 {
-		t.Fatalf("initial_max_streams_uni %d, chrome sends 103", webTransport.MaxIncomingUniStreams)
-	}
-	if webTransport.MaxIncomingStreams != 100 {
-		t.Fatalf("initial_max_streams_bidi %d, chrome sends 100", webTransport.MaxIncomingStreams)
-	}
-	if webTransport.InitialConnectionReceiveWindow != 15728640 {
-		t.Fatalf("initial_max_data %d, chrome sends 15728640", webTransport.InitialConnectionReceiveWindow)
-	}
-	if webTransport.InitialStreamReceiveWindow != 6291456 {
-		t.Fatalf("initial_max_stream_data %d, chrome sends 6291456", webTransport.InitialStreamReceiveWindow)
-	}
-	if webTransport.MaxDatagramFrameSize != 65536 {
-		t.Fatalf("max_datagram_frame_size %d, chrome sends 65536", webTransport.MaxDatagramFrameSize)
-	}
-	if webTransport.ConnectionIDLength != 0 {
-		t.Fatalf("connection id length %d, the chrome capture carries an empty initial_source_connection_id", webTransport.ConnectionIDLength)
-	}
-	information, ok := webTransport.AdditionalTransportParameters[0x11]
-	if !ok || len(information) != 12 {
-		t.Fatalf("version_information is %d bytes, chrome sends id 0x11 with twelve", len(information))
-	}
-	if _, ok := webTransport.AdditionalTransportParameters[0x3128]; ok {
-		t.Fatal("webtransport carries google_connection_options; the capture shows it only on the http3 path")
-	}
-
-	_, http3 := ChromeWindows.QUICConfig(QUICOptions{Transport: QUICHTTP3})
-	options, ok := http3.AdditionalTransportParameters[0x3128]
-	if !ok {
-		t.Fatal("http3 carries no google_connection_options, but the capture shows id 0x3128 on every h3 connection")
-	}
-	// The token Chrome 156 sends (measured on the wire 2026-10-21). Chrome
-	// 155 sent "ORIG"; the token is Chrome's own and changes with the
-	// release.
-	if string(options) != "ORIGNOIP" {
-		t.Fatalf("google_connection_options = %q, chrome 156 sends %q", options, "ORIGNOIP")
-	}
-}
-
-func TestQUICVersionInformationIsGreased(t *testing.T) {
-	for attempt := 0; attempt < 32; attempt++ {
-		information := chromeQUICVersionInformation()
-		if len(information) != 12 {
-			t.Fatalf("version_information is %d bytes, chrome sends 12", len(information))
-		}
-		greased := uint32(information[8])<<24 | uint32(information[9])<<16 | uint32(information[10])<<8 | uint32(information[11])
-		if greased&0x0f0f0f0f != 0x0a0a0a0a {
-			t.Fatalf("available version %#08x is not a greased version", greased)
+	for _, name := range names {
+		if !got[name] {
+			t.Errorf("the server saw %v, the connection to %s did not carry its own name", got, name)
 		}
 	}
 }

@@ -19,7 +19,8 @@ import (
 )
 
 // TestQUICClientResumesTheSession checks that a second connection to the
-// same origin resumes instead of sending the full handshake again.
+// same origin resumes instead of sending the full handshake again, and that
+// the third one resumes too.
 //
 // A browser that never resumes always sends the full handshake, and its
 // hello never carries the pre_shared_key extension. The QUIC stack could not
@@ -79,7 +80,12 @@ func TestQUICClientResumesTheSession(t *testing.T) {
 		}
 	}
 
-	for attempt := 0; attempt < 2; attempt++ {
+	// Three connections, not two. The second one resumes off the ticket of
+	// the first; the third one must resume off the ticket of the second. A
+	// client that can only resume once is a client that dies on the second
+	// resumed handshake.
+	const connections = 3
+	for attempt := 0; attempt < connections; attempt++ {
 		transport := newClient()
 		req, _ := http.NewRequest(http.MethodGet, "https://resumption.test/", nil)
 		resp, err := transport.RoundTrip(req)
@@ -99,12 +105,14 @@ func TestQUICClientResumesTheSession(t *testing.T) {
 		t.Fatal("the server saw no request")
 	}
 
-	select {
-	case second := <-resumed:
-		if !second {
-			t.Error("the second connection did not resume: the client never offered the ticket")
+	for attempt := 2; attempt <= connections; attempt++ {
+		select {
+		case again := <-resumed:
+			if !again {
+				t.Errorf("connection %d did not resume: the client never offered the ticket", attempt)
+			}
+		case <-time.After(5 * time.Second):
+			t.Fatalf("the server saw no connection %d", attempt)
 		}
-	case <-time.After(5 * time.Second):
-		t.Fatal("the server saw no second request")
 	}
 }

@@ -1139,6 +1139,30 @@ func copyExtension(ext utls.TLSExtension) utls.TLSExtension {
 	case *utls.FakeRecordSizeLimitExtension:
 		return &utls.FakeRecordSizeLimitExtension{Limit: e.Limit}
 
+	case *utls.UtlsPreSharedKeyExtension:
+		// The PSK extension holds the state of one handshake: the session
+		// it resumes, the early secret and the binders. uTLS fills it in
+		// place and refuses to fill one that is already filled ("the
+		// extension is already initialized"), so an extension shared
+		// between connections kills the second resumed handshake of a
+		// client. A fresh extension per connection is what a browser
+		// does: the ticket goes into the hello, the binders are computed
+		// for that hello.
+		return &utls.UtlsPreSharedKeyExtension{}
+
+	case *utls.FakePreSharedKeyExtension:
+		// The fake carries the identities and the binders the caller
+		// computed; they are the same for every connection. Copy them so
+		// the connections do not share one object.
+		identities := make([]utls.PskIdentity, len(e.Identities))
+		copy(identities, e.Identities)
+		binders := make([][]byte, len(e.Binders))
+		for i, b := range e.Binders {
+			binders[i] = make([]byte, len(b))
+			copy(binders[i], b)
+		}
+		return &utls.FakePreSharedKeyExtension{Identities: identities, Binders: binders}
+
 	default:
 		// For any unhandled extension types, return the original
 		// This is a fallback - ideally all extension types should be handled

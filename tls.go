@@ -84,6 +84,23 @@ func (p Profile) Transport(options TLSOptions) http.RoundTripper {
 	}
 }
 
+// ChromeHTTP2Transport returns a RoundTripper that speaks Chrome's HTTP/2
+// over a connection the caller dials.
+//
+// The HTTP/2 stack of this package already carries Chrome's frame values —
+// the SETTINGS it sends and the connection window it opens with — and that
+// stack is normally reached through Profile.Transport, which owns the TLS
+// layer as well. A caller that owns the TLS layer itself (a custom
+// ClientHello, a session cache of its own) can use this instead: the hello
+// is the caller's, the frames are Chrome's.
+//
+// The dial function must return a connection whose TLS handshake has
+// already completed with the "h2" ALPN; a connection that negotiated
+// anything else is spoken as HTTP/1.1.
+func ChromeHTTP2Transport(dial func(ctx context.Context, network, addr string) (net.Conn, error)) http.RoundTripper {
+	return &chromeRoundTripper{dialFunc: dial, callerOwnsHeaders: true}
+}
+
 func (p Profile) WebSocketDialer(options TLSOptions) *websocket.Dialer {
 	keyLog := sharedKeyLog()
 	sessionCache := utls.NewLRUClientSessionCache(0)
@@ -253,6 +270,14 @@ type chromeRoundTripper struct {
 	options        TLSOptions
 	sessionCache   utls.ClientSessionCache
 	http2Transport http2.Transport
+	// dialFunc, when set, is the caller's own TLS dialer: the transport
+	// then speaks Chrome's HTTP/2 over the caller's connection.
+	dialFunc func(ctx context.Context, network, addr string) (net.Conn, error)
+	// callerOwnsHeaders: the request's headers are the caller's, and the
+	// transport must not touch them. The profile owns the user agent and
+	// the Sec-Fetch-Site of its own requests; a caller that owns the
+	// request owns those too.
+	callerOwnsHeaders bool
 
 	mu               sync.Mutex
 	idleConnections  map[string][]idleConnection
@@ -260,14 +285,16 @@ type chromeRoundTripper struct {
 }
 
 func (t *chromeRoundTripper) RoundTrip(request *http.Request) (*http.Response, error) {
-	if request.Header.Get("Accept-Encoding") == "" {
-		request.Header.Set("Accept-Encoding", chromeAcceptEncoding)
-	}
-	if _, present := request.Header["User-Agent"]; !present {
-		request.Header.Set("User-Agent", t.profile.userAgent)
-	}
-	if _, present := request.Header["Sec-Fetch-Site"]; present {
-		request.Header.Set("Sec-Fetch-Site", secFetchSiteForRequest(request))
+	if !t.callerOwnsHeaders {
+		if request.Header.Get("Accept-Encoding") == "" {
+			request.Header.Set("Accept-Encoding", chromeAcceptEncoding)
+		}
+		if _, present := request.Header["User-Agent"]; !present && t.profile.userAgent != "" {
+			request.Header.Set("User-Agent", t.profile.userAgent)
+		}
+		if _, present := request.Header["Sec-Fetch-Site"]; present {
+			request.Header.Set("Sec-Fetch-Site", secFetchSiteForRequest(request))
+		}
 	}
 
 	port := request.URL.Port()
@@ -322,7 +349,13 @@ func (t *chromeRoundTripper) roundTripOnIdle(request *http.Request, address stri
 }
 
 func (t *chromeRoundTripper) roundTripOnNew(request *http.Request, address string) (*http.Response, error) {
-	uConn, err := t.profile.dialTLS(request.Context(), "tcp", address, t.keyLog, nil, t.sessionCache, t.options)
+	var uConn net.Conn
+	var err error
+	if t.dialFunc != nil {
+		uConn, err = t.dialFunc(request.Context(), "tcp", address)
+	} else {
+		uConn, err = t.profile.dialTLS(request.Context(), "tcp", address, t.keyLog, nil, t.sessionCache, t.options)
+	}
 	if err != nil {
 		return nil, err
 	}

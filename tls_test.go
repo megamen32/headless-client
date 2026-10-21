@@ -494,3 +494,42 @@ func TestTheCallerUserAgentSurvivesTheRoundTripper(t *testing.T) {
 		}
 	}
 }
+
+// TestChromeHTTP2TransportUsesTheCallersConnection checks that a caller can
+// own the TLS layer and still get Chrome's HTTP/2 frames: the transport
+// speaks h2 over the connection the caller's dialer returned.
+func TestChromeHTTP2TransportUsesTheCallersConnection(t *testing.T) {
+	address, _ := countingTLSServer(t, true, func(w http.ResponseWriter, r *http.Request) {
+		if r.ProtoMajor != 2 {
+			t.Errorf("the server saw %s, the transport must speak h2", r.Proto)
+		}
+		_, _ = w.Write([]byte("ok"))
+	})
+
+	transport := ChromeHTTP2Transport(func(ctx context.Context, network, _ string) (net.Conn, error) {
+		conn, err := (&net.Dialer{}).DialContext(ctx, "tcp", address)
+		if err != nil {
+			return nil, err
+		}
+		uconn := utls.UClient(conn, &utls.Config{
+			ServerName:         "example.com",
+			InsecureSkipVerify: true,
+			NextProtos:         []string{"h2", "http/1.1"},
+		}, utls.HelloChrome_133)
+		if err := uconn.HandshakeContext(ctx); err != nil {
+			conn.Close()
+			return nil, err
+		}
+		return uconn, nil
+	})
+
+	client := &http.Client{Transport: transport}
+	response, err := client.Get("https://example.com/")
+	if err != nil {
+		t.Fatalf("request: %v", err)
+	}
+	defer response.Body.Close()
+	if response.ProtoMajor != 2 {
+		t.Errorf("the response came over %s, want HTTP/2.0", response.Proto)
+	}
+}

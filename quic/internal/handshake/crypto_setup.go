@@ -86,6 +86,14 @@ func (w *uquicWrapper) SendSessionTicket(opts tls.QUICSessionTicketOptions) erro
 	})
 }
 
+// StoreSession is a no-op, and that is deliberate.
+//
+// The session the server sends arrives in a QUICStoreSession event, and the
+// event belongs to the stdlib-style connection: a connection built on
+// uTLS's own handshake stores the session in the TLS config's client session
+// cache by itself, and that is where the next handshake looks for it. The
+// wrapper sees the event only for the stdlib-style connection, whose own
+// StoreSession does the storing.
 func (w *uquicWrapper) StoreSession(session *tls.SessionState) error {
 	return nil
 }

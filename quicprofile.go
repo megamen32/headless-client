@@ -125,13 +125,20 @@ func (p Profile) quicClientHelloSpec(transport QUICTransport, alpn []string) *ut
 		extensions = append(extensions, &chromeQUICCA34Extension, &chromeQUIC12E0Extension)
 	}
 
-	return &utls.ClientHelloSpec{
+	// The resumption placeholder: the managed pre_shared_key extension.
+	// utls fills it from the session cache when the client holds a ticket
+	// for the host, and conceals it (OmitEmptyPsk) when it does not — the
+	// browser's A/B. It has to be the only PSK-class extension and stay
+	// last, so it goes in after the shuffle.
+	spec := &utls.ClientHelloSpec{
 		TLSVersMin:         utls.VersionTLS13,
 		TLSVersMax:         utls.VersionTLS13,
 		CipherSuites:       []uint16{utls.TLS_AES_128_GCM_SHA256, utls.TLS_AES_256_GCM_SHA384, utls.TLS_CHACHA20_POLY1305_SHA256},
 		CompressionMethods: []uint8{0},
 		Extensions:         utls.ShuffleChromeTLSExtensions(extensions),
 	}
+	spec.Extensions = append(spec.Extensions, &utls.UtlsPreSharedKeyExtension{})
+	return spec
 }
 
 func chromeGreasedQUICVersion() uint32 {
@@ -187,6 +194,10 @@ func (p Profile) QUICConfig(options QUICOptions) (*utls.Config, *quic.Config) {
 		InsecureSkipVerify: options.InsecureSkipVerify,
 		NextProtos:         alpn,
 		KeyLogWriter:       options.KeyLogWriter,
+		// The session cache: a browser that never resumes is a browser
+		// that always sends the full handshake. The cache is per
+		// configuration, so the connections of one client share it.
+		ClientSessionCache: utls.NewLRUClientSessionCache(0),
 	}
 	quicConfig := &quic.Config{
 		EnableDatagrams:                options.EnableDatagrams,

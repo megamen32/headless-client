@@ -411,11 +411,22 @@ func (d *Dialer) DialContext(ctx context.Context, urlStr string, requestHeader h
 		}
 		_, snct := ext["server_no_context_takeover"]
 		_, cnct := ext["client_no_context_takeover"]
-		if !snct || !cnct {
-			return nil, resp, errInvalidCompression
+		if snct && cnct {
+			// The server pinned both directions to no-context-takeover:
+			// compress outgoing frames the same way.
+			conn.newCompressionWriter = compressNoContextTakeover
+			conn.newDecompressionReader = decompressNoContextTakeover
+			break
 		}
-		conn.newCompressionWriter = compressNoContextTakeover
+		// The server answered permessage-deflate without (both) takeover
+		// flags — the answer ws-api.oneme.ru sends a real Chrome. RFC 7692
+		// leaves context takeover on for the side that did not promise
+		// otherwise, so decompress incoming frames, but keep outgoing
+		// frames plain: a context the client never agreed to compress
+		// under must not be assumed. Failing the handshake here (the old
+		// behaviour) is the one rejection a real Chrome does not do.
 		conn.newDecompressionReader = decompressNoContextTakeover
+		conn.enableWriteCompression = false
 		break
 	}
 
